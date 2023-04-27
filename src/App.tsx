@@ -17,7 +17,6 @@ function App() {
 
     const init = async () => {
       const codeReader = new BrowserQRCodeReader()
-      
 
       await codeReader.decodeFromVideoElement(video, (result, _, controls) => {
         if (result) {
@@ -31,7 +30,19 @@ function App() {
     init()
   }, [])
 
-  return <div>{!isSuccess && <Webcam audio={false} ref={videoRef} />}</div>
+  return (
+    <div>
+      {!isSuccess && (
+        <Webcam
+          audio={false}
+          ref={videoRef}
+          videoConstraints={{
+            facingMode: { exact: 'environment' },
+          }}
+        />
+      )}
+    </div>
+  )
 }
 
 export default App
