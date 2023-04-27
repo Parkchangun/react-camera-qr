@@ -20,18 +20,17 @@ function App() {
     const init = async () => {
       const codeReader = new BrowserQRCodeReader()
 
-      await codeReader
-        .decodeFromVideoElement(video, (result, error, controls) => {
-          if (result) {
-            console.log(result.getText())
-            window.open(result.getText(), '_blank')
-            controls.stop()
-            setIsSuccess(() => true)
-          }
-          if (error) {
-            alert(error)
-          }
-        })
+      await codeReader.decodeFromVideoElement(video, (result, error, controls) => {
+        if (result) {
+          console.log(result.getText())
+          window.open(result.getText(), '_blank')
+          controls.stop()
+          setIsSuccess(() => true)
+        }
+        if (error) {
+          alert(error)
+        }
+      })
     }
     init()
   }, [])
@@ -42,13 +41,9 @@ function App() {
         <Webcam
           audio={false}
           ref={videoRef}
-          videoConstraints={
-            isTabletOrMobile
-              ? {
-                  facingMode: { exact: 'environment' },
-                }
-              : undefined
-          }
+          videoConstraints={{
+            facingMode: { exact: 'environment' },
+          }}
         />
       )}
     </div>
