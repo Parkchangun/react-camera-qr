@@ -3,13 +3,13 @@ import { useEffect, useRef, useState } from 'react'
 import { BrowserQRCodeReader } from '@zxing/browser'
 // https://www.npmjs.com/package/react-webcam
 import Webcam from 'react-webcam'
-// import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive'
 
 function App() {
   const [isSuccess, setIsSuccess] = useState(false)
   const isMounted = useRef(false)
   const videoRef = useRef<Webcam>(null)
-  // const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
   useEffect(() => {
     const video = videoRef.current?.video
@@ -42,7 +42,7 @@ function App() {
           audio={false}
           ref={videoRef}
           videoConstraints={{
-            facingMode: { exact: 'environment' },
+            facingMode: { exact: isTabletOrMobile ? 'environment' : 'user' },
           }}
         />
       )}
